@@ -1,17 +1,17 @@
 
 export class TestRepository {
 
-    constructor() {
-        this.trainings = [];
+    constructor(prisma) {
+        // prisma client injected — avoid calling queries in constructor
+        console.log("prisma client injected")
+        this.prisma = prisma;
     }
 
     findAll = ()=> {
-        return this.trainings;
+        return this.prisma.test.findMany();
     }
 
-    create = (training)=> {
-        this.trainings.push(training);
-
-        return training;
+    create = (data)=> {
+    return this.prisma.test.create({data})
     }
 }
