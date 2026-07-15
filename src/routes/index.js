@@ -11,3 +11,7 @@ import express from 'express';
 import { testRouter } from './test.router.js';
 export const router = express.Router();
 router.use('/test',testRouter);
+
+
+import { userRouter } from './user.router.js';
+router.use('/user', userRouter)

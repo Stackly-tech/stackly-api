@@ -4,7 +4,7 @@
   "description": "This repository contains a Node.js Express application following a layered architecture. The structure is intentionally empty; you can add your implementation files later.",
   "main": "app.js",
   "scripts": {
-    "start": "node --env-file=.env src/server.js",
+    "dev" : "nodemon --env-file=.env src/server.js",
     "test": "node --test"
   },
   "repository": {
@@ -26,6 +26,7 @@
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
+    "nodemon": "^3.1.14",
     "swagger-jsdoc": "^6.3.0"
   }
 }
