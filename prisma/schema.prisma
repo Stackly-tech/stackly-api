@@ -12,16 +12,33 @@ datasource db {
   provider = "postgresql"
 }
 
+model Employee {
+  id          Int          @id @default(autoincrement())
+  firstName   String
+  lastName    String
+  email       String       @unique
+  department  String
+  jobTitle    String
+  enrollments Enrollment[]
+}
 
-model Test {
+model Course {
+  id          Int          @id @default(autoincrement())
+  title       String
+  description String
+  duration    Int // e.g., duration in hours
+  skillLevel  String // Beginner, Intermediate, Advanced
+  enrollments Enrollment[]
+}
 
-    id          Int      @id @default(autoincrement())
+model Enrollment {
+  id         Int      @id @default(autoincrement())
+  employeeId Int
+  courseId   Int
+  status     String // ENROLLED, IN_PROGRESS, COMPLETED
+  progress   Int      @default(0) // 0 to 100
+  enrolledAt DateTime @default(now())
 
-    title       String
-
-    duration    Int
-
-    createdAt   DateTime @default(now())
-
-    updatedAt   DateTime @updatedAt
+  employee Employee @relation(fields: [employeeId], references: [id])
+  course   Course   @relation(fields: [courseId], references: [id])
 }
