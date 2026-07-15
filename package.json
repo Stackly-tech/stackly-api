@@ -4,8 +4,15 @@
   "description": "This repository contains a Node.js Express application following a layered architecture. The structure is intentionally empty; you can add your implementation files later.",
   "main": "app.js",
   "scripts": {
-    "dev" : "nodemon --env-file=.env src/server.js",
-    "test": "node --test"
+    "dev": "tsx watch --env-file=.env src/server.ts",
+    "start": "tsx --env-file=.env src/server.ts",
+    "build": "tsc",
+    "test": "node --test",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "prisma": "tsx  --env-file=.env prisma/seed.ts"
   },
   "repository": {
     "type": "git",
@@ -20,13 +27,28 @@
   },
   "homepage": "https://gitlab.com/stackly-api/stackly-api#readme",
   "dependencies": {
+    "@prisma/adapter-pg": "^7.8.0",
+    "@prisma/client": "^7.8.0",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "joi": "^18.2.3",
+    "pg": "^8.22.0",
     "pino": "^10.3.1",
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.14",
-    "swagger-jsdoc": "^6.3.0"
+    "@eslint/js": "^10.0.1",
+    "@faker-js/faker": "^10.5.0",
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.1.1",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.8",
+    "eslint": "^10.6.0",
+    "globals": "^17.7.0",
+    "prettier": "^3.9.5",
+    "prisma": "^7.8.0",
+    "swagger-jsdoc": "^6.3.0",
+    "tsx": "^4.23.1",
+    "typescript": "^7.0.2"
   }
 }
