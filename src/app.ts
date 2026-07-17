@@ -1,20 +1,12 @@
-import express, {
-  type Request,
-  type Response,
-  type RequestHandler,
-  type NextFunction,
-} from "express";
-import { swaggerSpec, swaggerUi } from "./config/swagger.js";
-import { requestLogger } from "./middlewares/request.logger.js";
-import { router as indexRouter } from "./routes/index.js";
+import type { Request, Response, RequestHandler, NextFunction } from "express";
+import express from "express";
+import { registerMiddlewares } from "./middlewares/middleware.js";
+import { registerSwagger } from "./config/swagger.js";
+import { registerRoute } from "./config/routes.js";
 const app = express();
-app.use(express.json());
-app.use(requestLogger);
-app.get("/", (req: Request, res: Response) => {
-  res.redirect("/api-docs");
-});
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-app.use("/api", indexRouter);
+registerMiddlewares(app);
+registerSwagger(app);
+registerRoute(app);
 app.use(
   (err: RequestHandler, req: Request, res: Response, next: NextFunction) => {
     next(err);
