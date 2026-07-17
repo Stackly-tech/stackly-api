@@ -1,4 +1,4 @@
-import { type BaseServiceInterface } from "../services/base.service.interface.js";
+import { type BaseServiceInterface } from "#services/base.service.interface.js";
 import { type Request, type Response } from "express";
 import { BaseController } from "./base.controller.js";
 export class EmployeeController extends BaseController {

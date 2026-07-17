@@ -1,5 +1,5 @@
 import { type BaseRepositoryInterface } from "./base.repository.interface.js";
-import { type PrismaClient } from "../generated/prisma/client.js";
+import { type PrismaClient } from "#generated/prisma/client.js";
 export class EmployeeRepository implements BaseRepositoryInterface<any> {
   constructor(private prisma: PrismaClient) {}
   findAll = (): Promise<any[]> => {
