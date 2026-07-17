@@ -1,5 +1,5 @@
 import { type BaseServiceInterface } from "./base.service.interface.js";
-import { type BaseRepositoryInterface } from "../repositories/base.repository.interface.js";
+import { type BaseRepositoryInterface } from "#repositories/base.repository.interface.js";
 export class EmployeeService implements BaseServiceInterface<any> {
   constructor(private employeeRepository: BaseRepositoryInterface<any>) {}
   async findAll(): Promise<any[]> {
