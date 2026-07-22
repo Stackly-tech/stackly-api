@@ -7,7 +7,7 @@
     "dev": "tsx watch --env-file=.env src/server.ts",
     "start": "tsx --env-file=.env src/server.ts",
     "build": "tsc",
-    "test": "node --test",
+    "test": "tsx --test --env-file=.env src/test.ts",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint .",
@@ -32,26 +32,29 @@
   "dependencies": {
     "@prisma/adapter-pg": "^7.8.0",
     "@prisma/client": "^7.8.0",
+    "@prisma/sqlcommenter-query-insights": "^7.9.0",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
-    "joi": "^18.2.3",
     "pg": "^8.22.0",
     "pino": "^10.3.1",
-    "swagger-ui-express": "^5.0.1"
+    "swagger-ui-express": "^5.0.1",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@asteasolutions/zod-to-openapi": "^9.0.0",
     "@eslint/js": "^10.0.1",
     "@faker-js/faker": "^10.5.0",
-    "@openapitools/openapi-generator-cli": "^2.39.1",
     "@types/express": "^5.0.6",
     "@types/node": "^26.1.1",
-    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/supertest": "^7.2.1",
     "@types/swagger-ui-express": "^4.1.8",
     "eslint": "^10.6.0",
+    "express-openapi-validator": "^5.6.2",
     "globals": "^17.7.0",
     "prettier": "^3.9.5",
     "prisma": "^7.8.0",
-    "swagger-jsdoc": "^6.3.0",
+    "supertest": "^7.2.2",
+    "ts-node": "^10.9.2",
     "tsx": "^4.23.1",
     "typescript": "^7.0.2"
   }

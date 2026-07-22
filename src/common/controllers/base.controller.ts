@@ -3,7 +3,7 @@ import { type Response, type ErrorRequestHandler } from "express";
 // base.controller.js
 
 export class BaseController {
-  ok(res: Response, data: any, message = "Success") {
+  protected ok(res: Response, data: any, message = "Success") {
     return res.status(200).json({
       success: true,
       message,
@@ -11,7 +11,11 @@ export class BaseController {
     });
   }
 
-  created(res: Response, data = null, message = "Created Successfully") {
+  protected created(
+    res: Response,
+    data = null,
+    message = "Created Successfully",
+  ) {
     return res.status(201).json({
       success: true,
       message,
@@ -19,7 +23,7 @@ export class BaseController {
     });
   }
 
-  accepted(res: Response, data = null, message = "Accepted") {
+  protected accepted(res: Response, data = null, message = "Accepted") {
     return res.status(202).json({
       success: true,
       message,
@@ -27,46 +31,46 @@ export class BaseController {
     });
   }
 
-  noContent(res: Response) {
+  protected noContent(res: Response) {
     return res.status(204).send();
   }
 
-  badRequest(res: Response, message = "Bad Request") {
+  protected badRequest(res: Response, message = "Bad Request") {
     return res.status(400).json({
       success: false,
       message,
     });
   }
 
-  unauthorized(res: Response, message = "Unauthorized") {
+  protected unauthorized(res: Response, message = "Unauthorized") {
     return res.status(401).json({
       success: false,
       message,
     });
   }
 
-  forbidden(res: Response, message = "Forbidden") {
+  protected forbidden(res: Response, message = "Forbidden") {
     return res.status(403).json({
       success: false,
       message,
     });
   }
 
-  notFound(res: Response, message = "Resource Not Found") {
+  protected notFound(res: Response, message = "Resource Not Found") {
     return res.status(404).json({
       success: false,
       message,
     });
   }
 
-  conflict(res: Response, message = "Resource Conflict") {
+  protected conflict(res: Response, message = "Resource Conflict") {
     return res.status(409).json({
       success: false,
       message,
     });
   }
 
-  unprocessable(
+  protected unprocessable(
     res: Response,
     message = "Validation Failed",
     err: ErrorRequestHandler,
@@ -78,7 +82,7 @@ export class BaseController {
     });
   }
 
-  internalError(res: Response, message = "Internal Server Error") {
+  protected internalError(res: Response, message = "Internal Server Error") {
     return res.status(500).json({
       success: false,
       message,
