@@ -1,8 +1,8 @@
-import { type BaseService } from "#common/services/base.service.js";
+import { IService } from "#common/interfaces/IService.js";
 import { type Request, type Response } from "express";
 import { BaseController } from "#common/controllers/base.controller.js";
 export class EmployeeController extends BaseController {
-  constructor(private employeeService: BaseService<any>) {
+  constructor(private employeeService: IService<any>) {
     super();
   }
   findAll = async (req: Request, res: Response) => {};

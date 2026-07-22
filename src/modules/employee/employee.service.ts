@@ -1,8 +1,8 @@
-import { type BaseService } from "#common/services/base.service.js";
-import { BaseRepository } from "#common/repositories/base.repository.js";
+import { IService } from "#common/interfaces/IService.js";
+import { IRepository } from "#common/interfaces/IRepository.js";
 import { ListEmployeeDto } from "#modules/employee/dtos/list-employees.dto.js";
-export class EmployeeService implements BaseService<any> {
-  constructor(private employeeRepository: BaseRepository<any>) {}
+export class EmployeeService implements IService<any> {
+  constructor(private employeeRepository: IRepository<any>) {}
   async findAll(dto: ListEmployeeDto): Promise<any[]> {
     return await this.employeeRepository.findAll(dto);
   }

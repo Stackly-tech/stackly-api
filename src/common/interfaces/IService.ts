@@ -1,4 +1,4 @@
-export abstract class BaseService<T> {
+export abstract class IService<T> {
   abstract findAll(req: T): Promise<T[]>;
 
   abstract findById(id: T): Promise<T | null>;
