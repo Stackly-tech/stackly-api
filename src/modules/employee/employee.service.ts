@@ -1,9 +1,10 @@
-import { type BaseServiceInterface } from "./base.service.interface.js";
-import { type BaseRepositoryInterface } from "#repositories/base.repository.interface.js";
-export class EmployeeService implements BaseServiceInterface<any> {
-  constructor(private employeeRepository: BaseRepositoryInterface<any>) {}
-  async findAll(): Promise<any[]> {
-    return await this.employeeRepository.findAll();
+import { type BaseService } from "#common/services/base.service.js";
+import { BaseRepository } from "#common/repositories/base.repository.js";
+import { ListEmployeeDto } from "#modules/employee/dtos/list-employees.dto.js";
+export class EmployeeService implements BaseService<any> {
+  constructor(private employeeRepository: BaseRepository<any>) {}
+  async findAll(dto: ListEmployeeDto): Promise<any[]> {
+    return await this.employeeRepository.findAll(dto);
   }
   async findById(id: string): Promise<any> {
     return await this.employeeRepository.findById(id);

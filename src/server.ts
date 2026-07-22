@@ -1,9 +1,7 @@
 import "dotenv/config";
 import app from "#app.js";
-import { logger } from "#config/logger.js";
+import { prisma, logger } from "#common/config/connections.js";
 const PORT = process.env.PORT;
-import { prisma } from "#config/prisma.js";
-
 process.on("SIGINT", async () => {
   await prisma.$disconnect();
 
