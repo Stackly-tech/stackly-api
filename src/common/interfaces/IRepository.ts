@@ -1,4 +1,4 @@
-export abstract class BaseRepository<T> {
+export abstract class IRepository<T> {
   abstract findAll(req: T): Promise<T[]>;
 
   abstract findById(id: T): Promise<T | null>;
