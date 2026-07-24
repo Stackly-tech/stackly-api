@@ -35,6 +35,12 @@ export interface InternalAggregate {
   readonly alias: string;
 }
 
+export interface IPaginationResult {
+  readonly page?: number;
+  readonly limit?: number;
+  readonly offset?: number;
+}
+
 /**
  * Internal que*y contract.
  *
@@ -60,4 +66,12 @@ export interface InternalQuery {
   readonly groupBy: readonly string[];
 
   readonly distinct: readonly string[];
+}
+
+export interface QueryMetadata {
+  readonly searchableFields: readonly string[];
+  readonly sortableFields: readonly string[];
+  readonly filterableFields: readonly string[];
+  readonly selectableFields: readonly string[];
+  readonly aggregatableFields: readonly string[];
 }
