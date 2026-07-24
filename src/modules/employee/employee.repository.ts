@@ -1,14 +1,13 @@
-import { BaseRepository } from "#common/repositories/base.repository.js";
+import { IRepository } from "#common/interfaces/IRepository.js";
 import { type PrismaClient } from "#generated/prisma/client.js";
 import { type EmployeeDelegate } from "#generated/prisma/models.js";
-export class EmployeeRepository extends BaseRepository<any> {
+export class EmployeeRepository implements IRepository<any> {
   private db: EmployeeDelegate;
   constructor(private prisma: PrismaClient) {
-    super();
     this.db = this.prisma.employee;
   }
   findAll = (prismaQuery: any): Promise<any[]> => {
-    return this.db.findMany();
+    return this.db.findMany(prismaQuery);
   };
   findById = (id: number): Promise<any> => {
     return this.db.findFirst();
