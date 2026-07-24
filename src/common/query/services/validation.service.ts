@@ -3,7 +3,7 @@ import { isLogicalOperator } from "../contract/logical-operators.js";
 import { isFilterOperator } from "../contract/operators.js";
 import { isSortDirection } from "../contract/sort-directions.js";
 import type { QueryDto } from "#common/dtos/query.dto.js";
-import type { QueryMetadata } from "#common/interfaces/IQuermeta.js";
+import type { QueryMetadata } from "#common/interfaces/IInternal-query.js";
 export class ValidationService {
   public validate(query: QueryDto, metadata: QueryMetadata): void {
     this.validatePagination(query);

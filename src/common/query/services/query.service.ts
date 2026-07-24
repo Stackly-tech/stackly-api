@@ -1,5 +1,5 @@
 import { type QueryDto } from "#common/dtos/query.dto.js";
-import { type QueryMetadata } from "#common/interfaces/IQuermeta.js";
+import { type QueryMetadata } from "#common/interfaces/IInternal-query.js";
 import type { PaginationDto } from "#common/dtos/pagination.dto.js";
 import type { FilterGroupDto } from "#common/dtos/filter-group.dto.js";
 import type { FilterRuleDto } from "#common/dtos/filter-rule.dto.js";
@@ -11,10 +11,9 @@ import type {
   InternalFilterRule,
   InternalQuery,
   InternalSort,
+  IPaginationResult,
 } from "#common/interfaces/IInternal-query.js";
 import type { SearchDto } from "#common/dtos/search.dto.js";
-import { type IPaginationResult } from "#common/interfaces/IPaginationResult.js";
-import { type ISearchResult } from "#common/interfaces/ISearchResult.js";
 import { type TValidationService } from "./validation.service.js";
 
 export class QueryService {
