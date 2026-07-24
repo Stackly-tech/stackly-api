@@ -7,7 +7,7 @@ export class EmployeeRepository implements IRepository<any> {
     this.db = this.prisma.employee;
   }
   findAll = (prismaQuery: any): Promise<any[]> => {
-    return this.db.findMany();
+    return this.db.findMany(prismaQuery);
   };
   findById = (id: number): Promise<any> => {
     return this.db.findFirst();

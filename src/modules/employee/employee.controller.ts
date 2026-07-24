@@ -5,7 +5,12 @@ export class EmployeeController extends BaseController {
   constructor(private readonly service: IService<any>) {
     super();
   }
-  findAll = async (req: Request, res: Response) => {};
+  findAll = async (req: Request, res: Response) => {
+    const requestQuery =
+      Object.keys(req.body ?? {}).length > 0 ? req.body : req.query;
+    const result = await this.service.findAll(requestQuery);
+    return this.ok(res, result);
+  };
   findById = async (req: Request, res: Response) => {
     const result = this.service.findById("");
     return;
