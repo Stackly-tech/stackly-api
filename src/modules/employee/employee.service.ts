@@ -1,8 +1,7 @@
 import { IService } from "#common/interfaces/IService.js";
 import { IRepository } from "#common/interfaces/IRepository.js";
-import { ListEmployeeDto } from "#modules/employee/dtos/list-employees.dto.js";
 import { type QueryDto } from "#common/dtos/query.dto.js";
-import { employeeQueryMetadata } from "#common/query/meta/employee.query.js";
+import { employeeQueryMetadata } from "#modules/employee/employee.query.js";
 import { type SharedServices } from "#common/app.module.js";
 export class EmployeeService implements IService<any> {
   constructor(

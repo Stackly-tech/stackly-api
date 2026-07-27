@@ -1,57 +1,26 @@
-import { Prisma } from "#generated/prisma/client.js";
 import type {
   InternalFilterGroup,
   InternalFilterRule,
   InternalQuery,
-} from "../../interfaces/IInternal-query.js";
+} from "#common/interfaces/IInternal-query.js";
 
-export class PrismaAdapter {
-  public toFindManyArgs(query: InternalQuery): Prisma.EmployeeFindManyArgs {
-    const args: Prisma.EmployeeFindManyArgs = {};
+export abstract class BasePrismaAdapter<
+  TFindManyArgs,
+  TWhereInput,
+  TSelect,
+  TOrderBy,
+> {
+  public abstract toFindManyArgs(query: InternalQuery): TFindManyArgs;
 
-    if (
-      query.offset !== undefined &&
-      Number.isFinite(query.offset) &&
-      query.offset > 0
-    ) {
-      args.skip = query.offset;
+  protected buildWhere(group?: InternalFilterGroup): TWhereInput | undefined {
+    if (!group) {
+      return undefined;
     }
 
-    if (
-      query.limit !== undefined &&
-      Number.isFinite(query.limit) &&
-      query.limit > 0
-    ) {
-      args.take = query.limit;
-    }
-
-    const where = this.buildWhere(query.filters);
-
-    if (where) {
-      args.where = where;
-    }
-
-    const select = this.buildSelect(query.select);
-
-    if (select) {
-      args.select = select;
-    }
-
-    const orderBy = this.buildOrderBy(query.sorts);
-
-    if (orderBy.length > 0) {
-      args.orderBy = orderBy;
-    }
-
-    if (query.distinct.length > 0) {
-      args.distinct = query.distinct as Prisma.EmployeeScalarFieldEnum[];
-    }
-
-    return args;
+    return this.buildWhereGroup(group);
   }
-  private buildWhereGroup(
-    group: InternalFilterGroup,
-  ): Prisma.EmployeeWhereInput {
+
+  protected buildWhereGroup(group: InternalFilterGroup): TWhereInput {
     const conditions = group.rules.map((rule) => {
       if ("rules" in rule) {
         return this.buildWhereGroup(rule);
@@ -62,78 +31,75 @@ export class PrismaAdapter {
 
     switch (group.operator) {
       case "and":
-        return { AND: conditions };
+        return {
+          AND: conditions,
+        } as TWhereInput;
 
       case "or":
-        return { OR: conditions };
+        return {
+          OR: conditions,
+        } as TWhereInput;
 
       case "not":
-        return { NOT: conditions };
+        return {
+          NOT: conditions,
+        } as TWhereInput;
 
       default:
         throw new Error(`Unsupported operator: ${group.operator}`);
     }
   }
-  private buildWhere(
-    group?: InternalFilterGroup,
-  ): Prisma.EmployeeWhereInput | undefined {
-    if (!group) {
-      return undefined;
-    }
-    return this.buildWhereGroup(group);
-  }
-  private buildRule(rule: InternalFilterRule): Prisma.EmployeeWhereInput {
+
+  protected buildRule(rule: InternalFilterRule): TWhereInput {
     switch (rule.operator) {
       case "eq":
         return {
           [rule.field]: {
             equals: rule.value,
           },
-        };
+        } as TWhereInput;
 
       case "neq":
         return {
           [rule.field]: {
             not: rule.value,
           },
-        };
+        } as TWhereInput;
 
       case "gt":
         return {
           [rule.field]: {
             gt: rule.value,
           },
-        };
+        } as TWhereInput;
 
       case "gte":
         return {
           [rule.field]: {
             gte: rule.value,
           },
-        };
+        } as TWhereInput;
 
       case "lt":
         return {
           [rule.field]: {
             lt: rule.value,
           },
-        };
+        } as TWhereInput;
 
       case "lte":
         return {
           [rule.field]: {
             lte: rule.value,
           },
-        };
+        } as TWhereInput;
 
       default:
-        return {};
+        return {} as TWhereInput;
     }
   }
 
-  private buildSelect(
-    fields: readonly string[],
-  ): Prisma.EmployeeSelect | undefined {
+  protected buildSelect(fields: readonly string[]): TSelect | undefined {
     if (!fields.length) {
       return undefined;
     }
@@ -144,10 +110,10 @@ export class PrismaAdapter {
       this.assignSelectPath(select, field.split("."));
     }
 
-    return select as Prisma.EmployeeSelect;
+    return select as TSelect;
   }
 
-  private assignSelectPath(
+  protected assignSelectPath(
     target: Record<string, unknown>,
     paths: readonly string[],
   ): void {
@@ -175,15 +141,14 @@ export class PrismaAdapter {
     this.assignSelectPath(nested.select, tail);
   }
 
-  private buildOrderBy(
+  protected buildOrderBy(
     sorts: readonly {
       field: string;
       direction: "asc" | "desc";
     }[],
-  ): Prisma.EmployeeOrderByWithRelationInput[] {
+  ): TOrderBy[] {
     return sorts.map((sort) => ({
       [sort.field]: sort.direction,
-    })) as Prisma.EmployeeOrderByWithRelationInput[];
+    })) as TOrderBy[];
   }
 }
-export type IPrismaAdaptor = PrismaAdapter;

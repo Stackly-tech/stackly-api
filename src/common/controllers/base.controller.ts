@@ -1,5 +1,4 @@
 import { type Response, type ErrorRequestHandler } from "express";
-
 // base.controller.js
 
 export class BaseController {
