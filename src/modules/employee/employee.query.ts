@@ -1,4 +1,4 @@
-import { type QueryMetadata } from "#common/interfaces/IQuermeta.js";
+import { type QueryMetadata } from "#common/interfaces/IInternal-query.js";
 
 export const employeeQueryMetadata: QueryMetadata = {
   searchableFields: [
