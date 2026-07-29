@@ -9,6 +9,9 @@ export class EmployeeRepository implements IRepository<any> {
   findAll = (prismaQuery: any): Promise<any[]> => {
     return this.db.findMany(prismaQuery);
   };
+  aggregate = (args: any): Promise<any> => {
+    return this.db.aggregate(args);
+  };
   findById = (id: number): Promise<any> => {
     return this.db.findFirst();
   };
@@ -20,5 +23,8 @@ export class EmployeeRepository implements IRepository<any> {
   };
   delete = (id: any): Promise<any> => {
     return this.db.delete(id);
+  };
+  groupBy = (args: any): Promise<any> => {
+    return this.db.groupBy(args);
   };
 }

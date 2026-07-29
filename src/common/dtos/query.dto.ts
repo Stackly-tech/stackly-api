@@ -1,26 +1,26 @@
-import type { PaginationDto } from "./pagination.dto.js";
-import type { FilterGroupDto } from "./filter-group.dto.js";
-import type { SearchDto } from "./search.dto.js";
-import type { SortDto } from "./sort.dto.js";
-import type { AggregateDto } from "./aggregate.dto.js";
+import { z } from "zod";
+import { PaginationDtoSchema } from "./pagination.dto.js";
+import { FilterGroupDtoSchema } from "./filter-group.dto.js";
+import { SearchDtoSchema } from "./search.dto.js";
+import { SortDtoSchema } from "./sort.dto.js";
+import { AggregateDtoSchema } from "./aggregate.dto.js";
 
 /**
  * Complete frontend query contract.
  */
-export interface QueryDto {
-  readonly pagination?: PaginationDto;
+export const QueryDtoSchema = z.object({
+  pagination: PaginationDtoSchema.optional(),
+  select: z.array(z.string().min(1, "Field name must not be empty")).optional(),
+  filters: FilterGroupDtoSchema.optional(),
+  search: SearchDtoSchema.optional(),
+  sort: z.array(SortDtoSchema).optional(),
+  aggregates: z.array(AggregateDtoSchema).optional(),
+  groupBy: z
+    .array(z.string().min(1, "Field name must not be empty"))
+    .optional(),
+  distinct: z
+    .array(z.string().min(1, "Field name must not be empty"))
+    .optional(),
+});
 
-  readonly select?: readonly string[];
-
-  readonly filters?: FilterGroupDto;
-
-  readonly search?: SearchDto;
-
-  readonly sort?: readonly SortDto[];
-
-  readonly aggregate?: readonly AggregateDto[];
-
-  readonly groupBy?: readonly string[];
-
-  readonly distinct?: readonly string[];
-}
+export type QueryDto = z.infer<typeof QueryDtoSchema>;
