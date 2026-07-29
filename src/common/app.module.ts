@@ -1,17 +1,23 @@
 import { prisma, logger } from "#common/config/connections.js";
 import { employeeModule } from "#modules/employee/employee.module.js";
-import { QueryService } from "#common/query/services/query.service.js";
-import { ValidationService } from "./query/services/validation.service.js";
-import { EmployeePrismaAdapter } from "#modules/employee/adapters/employee.prisma.adaptor.js";
-const validationService = new ValidationService();
-const queryService = new QueryService(validationService);
-const adaptor = new EmployeePrismaAdapter();
+import { QueryBuilder } from "#common/query/query.builder.js";
+import { QueryService } from "./query/services/query.service.js";
+
+// Infrastructure
+const queryBuilder = new QueryBuilder();
+
+// Shared services across all modules
 const shared = {
   prisma,
   logger,
-  queryService,
-  adaptor,
+  queryBuilder,
 };
+
+// Query service for DTO transformation
+const queryService = new QueryService(shared);
+
+// Module initialization
+const employee = employeeModule(queryService, shared);
+
 export type SharedServices = typeof shared;
-const employee = employeeModule(shared);
 export { employee };
