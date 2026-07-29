@@ -1,20 +1,24 @@
 import { IService } from "#common/interfaces/IService.js";
 import { IRepository } from "#common/interfaces/IRepository.js";
-import { type QueryDto } from "#common/dtos/query.dto.js";
+import { QueryDtoSchema, type QueryDto } from "#common/dtos/query.dto.js";
 import { employeeQueryMetadata } from "#modules/employee/employee.query.js";
 import { type SharedServices } from "#common/app.module.js";
+import { QueryService } from "#common/query/services/query.service.js";
+import { type TEmployeePrismaAdapter } from "./adapters/employee.prisma.adaptor.js";
 export class EmployeeService implements IService<any> {
   constructor(
     private readonly repository: IRepository<any>,
     private readonly shared: SharedServices,
+    private readonly queryService: QueryService,
+    private readonly adapter: TEmployeePrismaAdapter,
   ) {}
-  async findAll(dto: QueryDto): Promise<any[]> {
-    const internalQuery = this.shared.queryService.build(
+  async findAll(dto: QueryDto) {
+    return await this.queryService.execute({
       dto,
-      employeeQueryMetadata,
-    );
-    const args = this.shared.adaptor.toFindManyArgs(internalQuery);
-    return await this.repository.findAll(args);
+      metadata: employeeQueryMetadata,
+      adapter: this.adapter,
+      repository: this.repository,
+    });
   }
   async findById(id: string): Promise<any> {
     return await this.repository.findById(id);
