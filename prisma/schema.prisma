@@ -42,3 +42,13 @@ model Enrollment {
   employee Employee @relation(fields: [employeeId], references: [id])
   course   Course   @relation(fields: [courseId], references: [id])
 }
+
+model studentsmarks {
+  serial_no  Int  @id @default(autoincrement())
+  student_name String
+  maths Int
+  english Int
+  hindi Int
+  telugu Int
+  total_marks Int
+}
