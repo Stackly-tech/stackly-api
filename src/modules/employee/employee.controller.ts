@@ -21,7 +21,6 @@ export class EmployeeController extends BaseController {
     const requestQuery =
       Object.keys(req.body ?? {}).length > 0 ? req.body : req.query;
     const result = await this.service.query(requestQuery);
-    console.log("🚀 ~ EmployeeController ~ result:", result);
     return this.successResponse(res, result.data, {
       pagination: {
         page: result.page,
