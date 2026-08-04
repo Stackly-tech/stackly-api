@@ -20,6 +20,14 @@ export class EmployeeService implements IService<any> {
       repository: this.repository,
     });
   }
+  async query(dto: QueryDto) {
+    return await this.queryService.execute({
+      dto,
+      metadata: employeeQueryMetadata,
+      adapter: this.adapter,
+      repository: this.repository,
+    });
+  }
   async findById(id: string): Promise<any> {
     return await this.repository.findById(id);
   }

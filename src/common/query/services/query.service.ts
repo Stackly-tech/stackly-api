@@ -8,13 +8,17 @@ export class QueryService {
       options.dto,
       options.metadata,
     );
-    console.log("🚀 ~ QueryService ~ execute ~ internalQuery:", internalQuery);
     const operation = this.detectOperation(internalQuery);
-    console.log("🚀 ~ QueryService ~ execute ~ operation:", operation);
     switch (operation) {
       case "findMany":
         const args = options.adapter.toFindManyArgs(internalQuery);
-        return options.repository.findAll(args);
+        const { rows, total } = await options.repository.findAll(args);
+        return {
+          data: rows,
+          total,
+          page: internalQuery.page,
+          limit: internalQuery.limit,
+        };
 
       case "aggregates": {
         const args = options.adapter.toAggregateArgs(internalQuery);
