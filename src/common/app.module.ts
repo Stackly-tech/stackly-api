@@ -2,6 +2,7 @@ import { prisma, logger } from "#common/config/connections.js";
 import { employeeModule } from "#modules/employee/employee.module.js";
 import { QueryBuilder } from "#common/query/query.builder.js";
 import { QueryService } from "./query/services/query.service.js";
+import { orderModule } from "#modules/orders/orders.module.js";
 
 // Infrastructure
 const queryBuilder = new QueryBuilder();
@@ -18,6 +19,8 @@ const queryService = new QueryService(shared);
 
 // Module initialization
 const employee = employeeModule(queryService, shared);
+const orders = orderModule(queryService, shared)
 
 export type SharedServices = typeof shared;
 export { employee };
+export {orders}
