@@ -6,14 +6,54 @@ import type {
   InternalSort,
 } from "#common/interfaces/IInternal-query.js";
 
-export abstract class BasePrismaAdapter<
+export interface IPrismaQueryAdapter {
+  toFindManyArgs(query: InternalQuery): unknown;
+  toCountArgs(query: InternalQuery): unknown;
+  toAggregateArgs(query: InternalQuery): unknown;
+  toGroupByArgs(query: InternalQuery): unknown;
+}
+
+export class BasePrismaAdapter<
   TFindManyArgs,
+  TCountArgs,
+  TAggregateArgs,
   TWhereInput,
   TSelect,
   TOrderBy,
   TGroupBy,
-> {
-  public abstract toFindManyArgs(query: InternalQuery): TFindManyArgs;
+  TGroupByArgs,
+> implements IPrismaQueryAdapter {
+  public toFindManyArgs(query: InternalQuery): TFindManyArgs {
+    const args = {} as TFindManyArgs & {
+      skip?: number;
+      take?: number;
+      where?: TWhereInput;
+      select?: TSelect;
+      orderBy?: TOrderBy[];
+    };
+    return this.applyCommonFindManyArgs(query, args) as TFindManyArgs;
+  }
+
+  public toCountArgs(query: InternalQuery): TCountArgs {
+    const args = {} as TCountArgs & { where?: TWhereInput };
+    return this.applyCommonCountArgs(query, args) as TCountArgs;
+  }
+
+  public toAggregateArgs(query: InternalQuery): TAggregateArgs {
+    const args = {} as TAggregateArgs & { where?: TWhereInput };
+    return this.applyCommonAggregateArgs(query, args) as TAggregateArgs;
+  }
+
+  public toGroupByArgs(query: InternalQuery): TGroupByArgs {
+    const args = {
+      by: query.groupBy as TGroupBy[],
+    } as unknown as TGroupByArgs & {
+      where?: TWhereInput;
+      orderBy?: TOrderBy[];
+    };
+
+    return this.applyCommonGroupByArgs(query, args) as TGroupByArgs;
+  }
 
   protected buildWhere(group?: InternalFilterGroup): TWhereInput | undefined {
     if (!group) {
@@ -171,6 +211,99 @@ export abstract class BasePrismaAdapter<
       default:
         return {} as TWhereInput;
     }
+  }
+
+  protected applyCommonFindManyArgs<
+    TArgs extends {
+      skip?: number;
+      take?: number;
+      where?: TWhereInput;
+      select?: TSelect;
+      orderBy?: TOrderBy[];
+    },
+  >(query: InternalQuery, args: TArgs): TArgs {
+    if (query.offset !== undefined && query.offset > 0) {
+      args.skip = query.offset;
+    }
+
+    if (query.limit !== undefined && query.limit > 0) {
+      args.take = query.limit;
+    }
+
+    const where = this.buildWhere(query.filters);
+
+    if (where) {
+      args.where = where;
+    }
+
+    const select = this.buildSelect(query.select);
+
+    if (select) {
+      args.select = select;
+    }
+
+    const orderBy = this.buildOrderBy(query.sorts);
+
+    if (orderBy.length > 0) {
+      args.orderBy = orderBy;
+    }
+
+    return args;
+  }
+
+  protected applyCommonCountArgs<TArgs extends { where?: TWhereInput }>(
+    query: InternalQuery,
+    args: TArgs,
+  ): TArgs {
+    const where = this.buildWhere(query.filters);
+
+    if (where) {
+      args.where = where;
+    }
+
+    return args;
+  }
+
+  protected applyCommonAggregateArgs<TArgs extends { where?: TWhereInput }>(
+    query: InternalQuery,
+    args: TArgs,
+  ): TArgs {
+    const where = this.buildWhere(query.filters);
+
+    if (where) {
+      args.where = where;
+    }
+
+    if (query.aggregates.length > 0) {
+      Object.assign(args, this.buildAggregates(query.aggregates));
+    }
+
+    return args;
+  }
+
+  protected applyCommonGroupByArgs<
+    TArgs extends {
+      where?: TWhereInput;
+      orderBy?: TOrderBy[];
+    },
+  >(query: InternalQuery, args: TArgs): TArgs {
+    const where = this.buildWhere(query.filters);
+
+    if (where) {
+      args.where = where;
+    }
+
+    const orderBy = this.buildOrderBy(query.sorts);
+
+    if (orderBy.length > 0) {
+      args.orderBy = orderBy;
+    }
+
+    if (query.aggregates.length > 0) {
+      Object.assign(args, this.buildAggregates(query.aggregates));
+    }
+
+    return args;
   }
 
   protected buildSelect(fields: readonly string[]): TSelect | undefined {

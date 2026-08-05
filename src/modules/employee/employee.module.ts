@@ -3,7 +3,8 @@ import { EmployeeController } from "./employee.controller.js";
 import { EmployeeRepository } from "./employee.repository.js";
 import { type SharedServices } from "#common/app.module.js";
 import { QueryService } from "#common/query/services/query.service.js";
-import { EmployeePrismaAdapter } from "#modules/employee/adapters/employee.prisma.adaptor.js";
+import { BasePrismaAdapter } from "#common/query/adapters/base-prisma.adapter.js";
+import { Prisma } from "#generated/prisma/client.js";
 
 /**
  * Employee module factory
@@ -14,7 +15,16 @@ export function employeeModule(
   shared: SharedServices,
 ) {
   const repository = new EmployeeRepository(shared.prisma);
-  const adapter = new EmployeePrismaAdapter(repository);
+  const adapter = new BasePrismaAdapter<
+    Prisma.EmployeeFindManyArgs,
+    Prisma.EmployeeCountArgs,
+    Prisma.EmployeeAggregateArgs,
+    Prisma.EmployeeWhereInput,
+    Prisma.EmployeeSelect,
+    Prisma.EmployeeOrderByWithRelationInput,
+    Prisma.EmployeeScalarFieldEnum,
+    Prisma.EmployeeGroupByArgs
+  >();
   const service = new EmployeeService(
     repository,
     shared,

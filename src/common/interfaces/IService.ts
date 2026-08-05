@@ -1,5 +1,5 @@
 export abstract class IService<T> {
-  abstract findAll(req: T): Promise<T[]>;
+  abstract findAll(req: T): Promise<any>;
 
   abstract findById(id: T): Promise<T | null>;
 
