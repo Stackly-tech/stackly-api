@@ -1,6 +1,4 @@
-
-
-import { IService } from "#common/interfaces/IServices.js";
+import { IService } from "#common/interfaces/IService.js";
 import { type Request, type Response } from "express";
 import { BaseController } from "#common/controllers/base.controller.js";
 export class StudentController extends BaseController {
