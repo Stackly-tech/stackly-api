@@ -9,6 +9,22 @@ export class BaseController {
       data,
     });
   }
+  protected successResponse(res: Response, data: any, options: any) {
+    const { status = 200, message = "Success", pagination, meta } = options;
+
+    return res.status(status).json({
+      success: true,
+      message,
+      data,
+      ...(pagination && {
+        pagination: {
+          ...pagination,
+          totalPages: Math.ceil(pagination.total / pagination.limit),
+        },
+      }),
+      ...(meta && { meta }),
+    });
+  }
 
   protected created(
     res: Response,
