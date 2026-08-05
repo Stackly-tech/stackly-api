@@ -1,17 +1,21 @@
-
 import { IRepository } from "#common/interfaces/IRepository.js";
 import { type PrismaClient } from "#generated/prisma/client.js";
 import { type studentDelegate } from "#generated/prisma/models.js";
-
-
 
 export class StudentRepository implements IRepository<any> {
   private db: studentDelegate;
   constructor(private prisma: PrismaClient) {
     this.db = this.prisma.student;
   }
-  findAll = (prismaQuery: any): Promise<any[]> => {
-    return this.db.findMany(prismaQuery);
+  findAll = async (prismaQuery: any): Promise<any> => {
+    const [rows, total] = await this.prisma.$transaction([
+      this.db.findMany(prismaQuery),
+      this.db.count({ where: prismaQuery.where }),
+    ]);
+    return {
+      rows,
+      total,
+    };
   };
   aggregate = (args: any): Promise<any> => {
     return this.db.aggregate(args);
