@@ -6,8 +6,15 @@ export class OrdersRepositary implements IRepository<any> {
   constructor(private prisma: PrismaClient) {
     this.db = this.prisma.orders;
   }
-  findAll = (prismaQuery: any): Promise<any[]> => {
-    return this.db.findMany(prismaQuery);
+  findAll = async (prismaQuery: any): Promise<any> => {
+    const [rows, total] = await this.prisma.$transaction([
+      this.db.findMany(prismaQuery),
+      this.db.count({ where: prismaQuery.where }),
+    ]);
+    return {
+      rows,
+      total,
+    };
   };
   aggregate = (args: any): Promise<any> => {
     return this.db.aggregate(args);

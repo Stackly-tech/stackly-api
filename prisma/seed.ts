@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { prisma } from "../src/common/config/prisma"
+import { prisma } from "../src/common/config/prisma.js";
 async function main() {
   console.log("Cleaning up existing data...");
   await prisma.enrollment.deleteMany();
