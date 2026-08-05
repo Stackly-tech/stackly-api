@@ -10,5 +10,4 @@ export abstract class IService<T> {
   abstract delete(id: T): Promise<T>;
 
   abstract patch(dto: T): Promise<T>;
-  abstract query(dto: T): Promise<T>;
 }

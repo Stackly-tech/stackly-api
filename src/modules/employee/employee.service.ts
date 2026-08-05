@@ -5,22 +5,16 @@ import { employeeQueryMetadata } from "#modules/employee/employee.query.js";
 import { type SharedServices } from "#common/app.module.js";
 import { QueryService } from "#common/query/services/query.service.js";
 import { type IPrismaQueryAdapter } from "#common/query/adapters/base-prisma.adapter.js";
-export class EmployeeService implements IService<any> {
+export class EmployeeService extends IService<any> {
   constructor(
     private readonly repository: IRepository<any>,
     private readonly shared: SharedServices,
     private readonly queryService: QueryService,
     private readonly adapter: IPrismaQueryAdapter,
-  ) {}
-  async findAll(dto: QueryDto) {
-    return await this.queryService.execute({
-      dto,
-      metadata: employeeQueryMetadata,
-      adapter: this.adapter,
-      repository: this.repository,
-    });
+  ) {
+    super();
   }
-  async query(dto: QueryDto) {
+  async findAll(dto: QueryDto) {
     return await this.queryService.execute({
       dto,
       metadata: employeeQueryMetadata,

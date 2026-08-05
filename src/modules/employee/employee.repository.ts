@@ -1,9 +1,10 @@
 import { IRepository } from "#common/interfaces/IRepository.js";
 import { type PrismaClient } from "#generated/prisma/client.js";
 import { type EmployeeDelegate } from "#generated/prisma/models.js";
-export class EmployeeRepository implements IRepository<any> {
+export class EmployeeRepository extends IRepository<any> {
   private db: EmployeeDelegate;
   constructor(private prisma: PrismaClient) {
+    super();
     this.db = this.prisma.employee;
   }
   findAll = async (prismaQuery: any): Promise<any> => {

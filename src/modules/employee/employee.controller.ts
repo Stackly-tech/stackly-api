@@ -17,18 +17,6 @@ export class EmployeeController extends BaseController {
       },
     });
   };
-  query = async (req: Request, res: Response) => {
-    const requestQuery =
-      Object.keys(req.body ?? {}).length > 0 ? req.body : req.query;
-    const result = await this.service.query(requestQuery);
-    return this.successResponse(res, result.data, {
-      pagination: {
-        page: result.page,
-        limit: result.limit,
-        total: result.total,
-      },
-    });
-  };
   findById = async (req: Request, res: Response) => {
     const result = this.service.findById("");
     return;
