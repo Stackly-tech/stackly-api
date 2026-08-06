@@ -6,7 +6,6 @@ import { swaggerUi, document } from "./swagger.js";
 export const router = express.Router();
 router.use("/employee", employeeRouter);
 router.use("/student", studentRouter);
-
 export function registerRoute(app: Express) {
   app.get("/", (req, res) => {
     res.redirect("/api-docs");
