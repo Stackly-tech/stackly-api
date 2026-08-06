@@ -1,5 +1,6 @@
 import { prisma, logger } from "#common/config/connections.js";
 import { employeeModule } from "#modules/employee/employee.module.js";
+import { studentModule } from "#modules/student/student.module.js";
 import { QueryBuilder } from "#common/query/query.builder.js";
 import { QueryService } from "./query/services/query.service.js";
 import { orderModule } from "#modules/orders/orders.module.js";
