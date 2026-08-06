@@ -43,20 +43,31 @@ model Enrollment {
   course   Course   @relation(fields: [courseId], references: [id])
 }
 
+model Student {
+  id             Int      @id @default(autoincrement())
+  firstName      String
+  lastName       String
+  email          String   @unique
+  course         String
+  rollNumber     String   @unique
+  year           Int
+  phoneNumber    String
+  enrollmentDate DateTime @default(now())
+}
+
 model studentsmarks {
-  serial_no  Int  @id @default(autoincrement())
+  serial_no    Int    @id @default(autoincrement())
   student_name String
-  maths Int
-  english Int
-  hindi Int
-  telugu Int
-  total_marks Int
+  maths        Int
+  english      Int
+  hindi        Int
+  telugu       Int
+  total_marks  Int
 }
 
 model Orders {
-  order_no Int @id @default(autoincrement())
-  Item_name String 
-  Item_price Int
+  order_no      Int    @id @default(autoincrement())
+  Item_name     String
+  Item_price    Int
   Item_Quantity Int
 }
-
