@@ -1,9 +1,9 @@
 import { IRepository } from "#common/interfaces/IRepository.js";
 import { type PrismaClient } from "#generated/prisma/client.js";
-import { type studentDelegate } from "#generated/prisma/models.js";
+import { type StudentDelegate } from "#generated/prisma/models.js";
 
 export class StudentRepository implements IRepository<any> {
-  private db: studentDelegate;
+  private db: StudentDelegate;
   constructor(private prisma: PrismaClient) {
     this.db = this.prisma.student;
   }

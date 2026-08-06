@@ -42,14 +42,15 @@ model Enrollment {
   employee Employee @relation(fields: [employeeId], references: [id])
   course   Course   @relation(fields: [courseId], references: [id])
 }
-model student {
-  id Int  @id @default(autoincrement())
-  firstName String
-  lastName String
-  email String
-  course String
-  rollNumber Int 
 
-  phoneNumber Int
-  
+model Student {
+  id             Int      @id @default(autoincrement())
+  firstName      String
+  lastName       String
+  email          String   @unique
+  course         String
+  rollNumber     String   @unique
+  year           Int
+  phoneNumber    String
+  enrollmentDate DateTime @default(now())
 }

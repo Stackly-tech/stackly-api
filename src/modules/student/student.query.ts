@@ -1,14 +1,7 @@
-
 import { type QueryMetadata } from "#common/interfaces/IInternal-query.js";
 
 export const studentQueryMetadata: QueryMetadata = {
-  searchableFields: [
-    "firstName",
-    "lastName",
-    "email",
-    "rollNumber",
-    "course",
-  ],
+  searchableFields: ["firstName", "lastName", "email", "rollNumber", "course"],
 
   sortableFields: [
     "email",
