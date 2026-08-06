@@ -1,4 +1,4 @@
-// / update-student.dto.ts
+// update-student.dto.ts
 import { CreateStudentDto } from "./create-student.dto.js";
 import { z } from "zod";
 
