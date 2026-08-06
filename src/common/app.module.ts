@@ -20,8 +20,8 @@ const queryService = new QueryService(shared);
 
 // Module initialization
 const employee = employeeModule(queryService, shared);
-const orders = orderModule(queryService, shared)
+const orders = orderModule(queryService, shared);
+const student = studentModule(queryService, shared);
 
 export type SharedServices = typeof shared;
-export { employee };
-export {orders}
+export { employee, student, orders };
