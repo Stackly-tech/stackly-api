@@ -54,3 +54,20 @@ model Student {
   phoneNumber    String
   enrollmentDate DateTime @default(now())
 }
+
+model studentsmarks {
+  serial_no    Int    @id @default(autoincrement())
+  student_name String
+  maths        Int
+  english      Int
+  hindi        Int
+  telugu       Int
+  total_marks  Int
+}
+
+model Orders {
+  order_no      Int    @id @default(autoincrement())
+  Item_name     String
+  Item_price    Int
+  Item_Quantity Int
+}
