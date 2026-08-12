@@ -13,7 +13,7 @@ export function registerMiddlewares(app: Express) {
   app.use(helmet());
   app.use(
     cors({
-      credentials: false,
+      credentials: true,
       methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
       allowedHeaders: ["Authorization", "Content-Type"],
       maxAge: 600,

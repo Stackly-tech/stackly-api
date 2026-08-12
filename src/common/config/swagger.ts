@@ -3,8 +3,112 @@ export { swaggerUi };
 export const document = {
   openapi: "3.1.1",
 
+  paths: {
+    "/api/auth/register": {
+      post: {
+        summary: "Register a user",
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/AuthCredentials" },
+            },
+          },
+        },
+        responses: {
+          "201": { description: "User registered" },
+          "409": { description: "Duplicate user" },
+        },
+      },
+    },
+    "/api/auth/login": {
+      post: {
+        summary: "Create an authenticated session",
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/AuthCredentials" },
+            },
+          },
+        },
+        responses: {
+          "200": { description: "Access token issued" },
+          "401": { description: "Invalid credentials" },
+        },
+      },
+    },
+    "/api/auth/refresh": {
+      post: {
+        summary: "Rotate a refresh token",
+        responses: {
+          "200": { description: "Token rotated" },
+          "401": { description: "Invalid refresh token" },
+        },
+      },
+    },
+    "/api/auth/logout": {
+      post: {
+        summary: "Revoke the current session",
+        security: [{ accessToken: [] }],
+        responses: { "204": { description: "Session revoked" } },
+      },
+    },
+    "/api/auth/logout-all": {
+      post: {
+        summary: "Revoke all sessions",
+        security: [{ accessToken: [] }],
+        responses: { "204": { description: "Sessions revoked" } },
+      },
+    },
+    "/api/auth/me": {
+      get: {
+        summary: "Get the current user",
+        security: [{ accessToken: [] }],
+        responses: { "200": { description: "Current user" } },
+      },
+    },
+    "/api/auth/forgot-password": {
+      post: {
+        summary: "Request a password reset",
+        responses: { "200": { description: "Generic response" } },
+      },
+    },
+    "/api/auth/reset-password": {
+      post: {
+        summary: "Reset a password",
+        responses: {
+          "200": { description: "Password reset" },
+          "401": { description: "Invalid reset token" },
+        },
+      },
+    },
+    "/api/auth/change-password": {
+      post: {
+        summary: "Change the current password",
+        security: [{ accessToken: [] }],
+        responses: {
+          "200": { description: "Password changed" },
+          "401": { description: "Invalid credentials" },
+        },
+      },
+    },
+  },
+
   components: {
+    securitySchemes: {
+      accessToken: { type: "http", scheme: "bearer", bearerFormat: "JWT" },
+    },
     schemas: {
+      AuthCredentials: {
+        type: "object",
+        required: ["email", "password"],
+        properties: {
+          tenantId: { type: "string", default: "default" },
+          email: { type: "string", format: "email" },
+          password: { type: "string", minLength: 12 },
+        },
+      },
       QueryDto: {
         type: "object",
         properties: {
