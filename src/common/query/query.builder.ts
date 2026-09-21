@@ -1,10 +1,10 @@
-import { type QueryDto } from "#common/dtos/query.dto.js";
-import { type QueryMetadata } from "#common/interfaces/IInternal-query.js";
-import type { PaginationDto } from "#common/dtos/pagination.dto.js";
-import type { FilterGroupDto } from "#common/dtos/filter-group.dto.js";
-import type { FilterRuleDto } from "#common/dtos/filter-rule.dto.js";
-import type { SortDto } from "#common/dtos/sort.dto.js";
-import type { AggregateDto } from "#common/dtos/aggregate.dto.js";
+import { type QueryDto } from "#/common/dtos/query.dto.js";
+import { type QueryMetadata } from "#/common/interfaces/IInternal-query.js";
+import type { PaginationDto } from "#/common/dtos/pagination.dto.js";
+import type { FilterGroupDto } from "#/common/dtos/filter-group.dto.js";
+import type { FilterRuleDto } from "#/common/dtos/filter-rule.dto.js";
+import type { SortDto } from "#/common/dtos/sort.dto.js";
+import type { AggregateDto } from "#/common/dtos/aggregate.dto.js";
 import { createQuerySchema } from "./services/validation.service.js";
 import type {
   InternalAggregate,
@@ -13,38 +13,35 @@ import type {
   InternalQuery,
   InternalSort,
   IPaginationResult,
-} from "#common/interfaces/IInternal-query.js";
-import type { SearchDto } from "#common/dtos/search.dto.js";
+} from "#/common/interfaces/IInternal-query.js";
+import type { SearchDto } from "#/common/dtos/search.dto.js";
 
 export class QueryBuilder {
   constructor() {}
 
-  public build(queryDto: QueryDto, metadata: QueryMetadata): any {
+  public build(queryDto: QueryDto, metadata: QueryMetadata): InternalQuery {
     const schema = createQuerySchema(metadata);
     const query = schema.parse(queryDto);
     const pagination = this.PaginationBuilder(query.pagination);
     const search = this.SearchBuilder(query.search);
+    const filters = this.FilterBuilder(query.filters);
+
     return {
-      page: pagination.page,
-      limit: pagination.limit,
-      offset: pagination.offset,
-
       select: this.SelectBuilder(query.select),
-
-      filters: this.FilterBuilder(query.filters),
-
       searchFields: search.fields,
-
-      searchValue: search.value,
-
+      ...(search.value !== undefined ? { searchValue: search.value } : {}),
       sorts: this.SortBuilder(query.sort),
-
       aggregates: this.AggregateBuilder(query.aggregates),
-
       groupBy: this.GroupBuilder(query.groupBy),
-
       distinct: this.DistinctBuilder(query.distinct),
-    };
+      ...(filters ? { filters } : {}),
+      ...(pagination.page !== undefined ? { page: pagination.page } : {}),
+      ...(pagination.limit !== undefined ? { limit: pagination.limit } : {}),
+      ...(pagination.offset !== undefined ? { offset: pagination.offset } : {}),
+      ...(query.first !== undefined
+        ? { first: this.firstBuilder(query.first) }
+        : {}),
+    } as InternalQuery;
   }
 
   private AggregateBuilder(
@@ -65,19 +62,8 @@ export class QueryBuilder {
     return fields ?? [];
   }
 
-  private buildFilter(group?: FilterGroupDto): InternalFilterGroup | undefined {
-    if (!group) {
-      return undefined;
-    }
-
-    return {
-      operator: group.operator,
-      rules: group.rules.map((rule: FilterRuleDto) =>
-        this.isFilterGroup(rule)
-          ? this.buildFilter(rule)!
-          : this.buildRule(rule),
-      ),
-    };
+  private firstBuilder(value?: boolean): boolean {
+    return value ?? false;
   }
 
   private FilterBuilder(
@@ -91,7 +77,7 @@ export class QueryBuilder {
       operator: group.operator,
       rules: group.rules.map((rule: FilterRuleDto) =>
         this.isFilterGroup(rule)
-          ? this.buildFilter(rule)!
+          ? this.FilterBuilder(rule)!
           : this.buildRule(rule),
       ),
     };

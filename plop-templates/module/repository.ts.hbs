@@ -1,0 +1,54 @@
+import { IRepository } from "#/common/interfaces/IRepository.js";
+import { type PrismaClient } from "#/generated/prisma/client.js";
+import { type {{pascalCase prismaModel}}Delegate } from "#/generated/prisma/models.js";
+
+export class {{pascalCase name}}Repository extends IRepository<any> {
+  private db: {{pascalCase prismaModel}}Delegate;
+  constructor(private prisma: PrismaClient) {
+    super();
+    this.db = this.prisma.{{camelCase prismaModel}};
+  }
+
+  findAll = async (prismaQuery: any): Promise<any> => {
+    const [rows, total] = await this.prisma.$transaction([
+      this.db.findMany(prismaQuery),
+      this.db.count({ where: prismaQuery.where }),
+    ]);
+    return {
+      rows,
+      total,
+    };
+  };
+
+  aggregate = (args: any): Promise<any> => {
+    return this.db.aggregate(args);
+  };
+
+  findById = (_id: number | string): Promise<any> => {
+    return this.db.findFirst();
+  };
+
+  create = (data: any): Promise<any> => {
+    return this.db.create({ data });
+  };
+
+  update = (data: any): Promise<any> => {
+    return this.db.update(data);
+  };
+
+  delete = (_id: any): Promise<any> => {
+    return this.db.delete(_id);
+  };
+
+  groupBy = (args: any): Promise<any> => {
+    return this.db.groupBy(args);
+  };
+
+  findUnique = (args: any): Promise<any> => {
+    return this.db.findUnique(args);
+  };
+
+  findFirst(args: any): Promise<any> {
+    return this.db.findFirst(args);
+  }
+}

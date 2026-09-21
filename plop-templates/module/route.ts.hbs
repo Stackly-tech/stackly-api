@@ -1,0 +1,17 @@
+import {
+{{camelCase name}}
+} from "#/common/app.module.js"; import { Router } from "express"; const {
+findAll, findById, create, update, patch, remove, query } =
+{{camelCase name}}.controller; export const
+{{camelCase name}}Router = Router();
+
+{{camelCase name}}Router.get("/query", query);
+{{camelCase name}}Router.post("/query", query);
+
+{{camelCase name}}Router.get("/", findAll);
+{{camelCase name}}Router.post("/", create);
+
+{{camelCase name}}Router.get("/:id", findById);
+{{camelCase name}}Router.put("/:id", update);
+{{camelCase name}}Router.patch("/:id", patch);
+{{camelCase name}}Router.delete("/:id", remove);

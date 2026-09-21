@@ -1,6 +1,6 @@
-import { pino, destination } from "pino";
+import { pino } from "pino";
 import type { Request, Response, NextFunction } from "express";
-import { config } from "#config.js";
+import { config } from "#/config.js";
 import path from "node:path";
 const logger = pino({
   transport: {

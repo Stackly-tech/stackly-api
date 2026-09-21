@@ -1,20 +1,17 @@
 import { type Express } from "express";
 import express from "express";
-import { employeeRouter } from "#modules/employee/employee.route.js";
-import { studentRouter } from "#modules/student/student.route.js";
 import { swaggerUi, document } from "./swagger.js";
-import { orderRouter } from "#modules/orders/orders.router.js";
-import { authRouter } from "#modules/auth/auth.module.js";
+import { toNodeHandler } from "better-auth/node";
+import { auth } from "./better-auth.config.js";
+import { authenticate } from "#/common/auth/auth.middleware.js";
+import { userRouter } from "#/modules/users/user.route.js";
 export const router = express.Router();
-router.use("/employee", employeeRouter);
-router.use("/orders", orderRouter);
-router.use("/student", studentRouter);
-router.use("/auth", authRouter);
-
+router.use("/users", userRouter);
 export function registerRoute(app: Express) {
-  app.get("/", (_req, res) => {
+  app.get("/", authenticate, (_req, res) => {
     res.redirect("/api-docs");
   });
   app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(document));
-  app.use("/api", router);
+  app.all("/api/auth/*splat", toNodeHandler(auth));
+  app.use("/api", authenticate, router);
 }

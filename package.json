@@ -12,7 +12,7 @@
     "format:check": "prettier --check .",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "prisma": "tsx  --env-file=.env prisma/seed.ts"
+    "plop": "plop"
   },
   "repository": {
     "type": "git",
@@ -23,17 +23,20 @@
   "license": "ISC",
   "type": "module",
   "imports": {
-    "#*": "./src/*"
+    "#/*": "./src/*"
   },
   "bugs": {
     "url": "https://gitlab.com/stackly-api/stackly-api/issues"
   },
   "homepage": "https://gitlab.com/stackly-api/stackly-api#readme",
   "dependencies": {
+    "@casl/ability": "^7.0.1",
+    "@casl/prisma": "^2.0.2",
     "@prisma/adapter-pg": "^7.8.0",
     "@prisma/client": "^7.8.0",
     "@prisma/sqlcommenter-query-insights": "^7.9.0",
     "argon2": "^0.45.1",
+    "better-auth": "^1.7.4",
     "compression": "^1.8.1",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
@@ -65,6 +68,7 @@
     "eslint": "^10.7.0",
     "express-openapi-validator": "^5.6.2",
     "globals": "^17.7.0",
+    "plop": "^4.0.5",
     "prettier": "^3.9.5",
     "prisma": "^7.8.0",
     "prisma-zod-generator": "^3.1.0",

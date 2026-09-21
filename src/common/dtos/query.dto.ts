@@ -21,6 +21,7 @@ export const QueryDtoSchema = z.object({
   distinct: z
     .array(z.string().min(1, "Field name must not be empty"))
     .optional(),
+  first: z.boolean().optional(),
 });
 
 export type QueryDto = z.infer<typeof QueryDtoSchema>;

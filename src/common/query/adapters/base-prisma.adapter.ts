@@ -4,10 +4,12 @@ import type {
   InternalQuery,
   InternalAggregate,
   InternalSort,
-} from "#common/interfaces/IInternal-query.js";
+} from "#/common/interfaces/IInternal-query.js";
 
 export interface IPrismaQueryAdapter {
   toFindManyArgs(query: InternalQuery): unknown;
+  toFindUniqueArgs(query: InternalQuery, unique: Record<string, any>): unknown;
+  toFindFirstArgs(query: InternalQuery): unknown;
   toCountArgs(query: InternalQuery): unknown;
   toAggregateArgs(query: InternalQuery): unknown;
   toGroupByArgs(query: InternalQuery): unknown;
@@ -15,6 +17,8 @@ export interface IPrismaQueryAdapter {
 
 export class BasePrismaAdapter<
   TFindManyArgs,
+  TFindUniqueArgs,
+  TFindFirstArgs,
   TCountArgs,
   TAggregateArgs,
   TWhereInput,
@@ -32,6 +36,31 @@ export class BasePrismaAdapter<
       orderBy?: TOrderBy[];
     };
     return this.applyCommonFindManyArgs(query, args) as TFindManyArgs;
+  }
+
+  public toFindUniqueArgs(
+    query: InternalQuery,
+    unique: Record<string, any>,
+  ): TFindUniqueArgs {
+    const args = {} as TFindUniqueArgs & {
+      where?: TWhereInput;
+      select?: TSelect;
+    };
+
+    args.where = unique as TWhereInput;
+
+    return this.applyCommonFindUniqueArgs(query, args);
+  }
+
+  public toFindFirstArgs(query: InternalQuery): TFindFirstArgs {
+    const args = {} as TFindFirstArgs & {
+      skip?: number;
+      take?: number;
+      where?: TWhereInput;
+      select?: TSelect;
+      orderBy?: TOrderBy[];
+    };
+    return this.applyCommonFindFirstArgs(query, args) as TFindFirstArgs;
   }
 
   public toCountArgs(query: InternalQuery): TCountArgs {
@@ -211,6 +240,59 @@ export class BasePrismaAdapter<
       default:
         return {} as TWhereInput;
     }
+  }
+
+  protected applyCommonFindUniqueArgs<
+    TArgs extends {
+      where?: TWhereInput;
+      select?: TSelect;
+    },
+  >(query: InternalQuery, args: TArgs): TArgs {
+    const select = this.buildSelect(query.select);
+
+    if (select) {
+      args.select = select;
+    }
+
+    return args;
+  }
+
+  protected applyCommonFindFirstArgs<
+    TArgs extends {
+      skip?: number;
+      take?: number;
+      where?: TWhereInput;
+      select?: TSelect;
+      orderBy?: TOrderBy[];
+    },
+  >(query: InternalQuery, args: TArgs): TArgs {
+    if (query.offset !== undefined && query.offset > 0) {
+      args.skip = query.offset;
+    }
+
+    if (query.limit !== undefined && query.limit > 0) {
+      args.take = query.limit;
+    }
+
+    const where = this.buildWhere(query.filters);
+
+    if (where) {
+      args.where = where;
+    }
+
+    const select = this.buildSelect(query.select);
+
+    if (select) {
+      args.select = select;
+    }
+
+    const orderBy = this.buildOrderBy(query.sorts);
+
+    if (orderBy.length > 0) {
+      args.orderBy = orderBy;
+    }
+
+    return args;
   }
 
   protected applyCommonFindManyArgs<

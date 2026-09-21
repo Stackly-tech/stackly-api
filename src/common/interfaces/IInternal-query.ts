@@ -66,6 +66,8 @@ export interface InternalQuery {
   readonly groupBy: readonly string[];
 
   readonly distinct: readonly string[];
+
+  readonly first?: boolean;
 }
 
 export interface QueryMetadata {
@@ -74,4 +76,13 @@ export interface QueryMetadata {
   readonly filterableFields: readonly string[];
   readonly selectableFields: readonly string[];
   readonly aggregatableFields: readonly string[];
+  readonly defaultSearchableFields: readonly string[];
+
+  readonly defaultSortableFields: readonly string[];
+
+  readonly defaultFilterableFields: readonly string[];
+
+  readonly defaultSelectableFields: readonly string[];
+
+  readonly defaultAggregatableFields: readonly string[];
 }

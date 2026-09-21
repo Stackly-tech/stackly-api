@@ -1,0 +1,38 @@
+import { {{pascalCase name}}Service } from "./{{kebabCase name}}.service.js";
+import { {{pascalCase name}}Controller } from "./{{kebabCase name}}.controller.js";
+import { {{pascalCase name}}Repository } from "./{{kebabCase name}}.repository.js";
+import { type SharedServices } from "#/common/app.module.js";
+import { QueryService } from "#/common/query/services/query.service.js";
+import { BasePrismaAdapter } from "#/common/query/adapters/base-prisma.adapter.js";
+import { Prisma } from "#/generated/prisma/client.js";
+
+/**
+ * {{pascalCase name}} module factory
+ * Initializes all {{pascalCase name}}-related dependencies
+ */
+export function {{pascalCase name}}Module(
+  queryService: QueryService,
+  shared: SharedServices,
+) {
+  const repository = new {{pascalCase name}}Repository(shared.prisma);
+  const adapter = new BasePrismaAdapter<
+    Prisma.{{pascalCase prismaModel}}FindManyArgs,
+    Prisma.{{pascalCase prismaModel}}CountArgs,
+    Prisma.{{pascalCase prismaModel}}AggregateArgs,
+    Prisma.{{pascalCase prismaModel}}WhereInput,
+    Prisma.{{pascalCase prismaModel}}Select,
+    Prisma.{{pascalCase prismaModel}}OrderByWithRelationInput,
+    Prisma.{{pascalCase prismaModel}}ScalarFieldEnum,
+    Prisma.{{pascalCase prismaModel}}GroupByArgs,
+    Prisma.{{pascalCase prismaModel}}FindFirstArgs,
+    Prisma.{{pascalCase prismaModel}}FindUniqueArgs
+  >();
+  const service = new {{pascalCase name}}Service(repository, queryService, adapter);
+  const controller = new {{pascalCase name}}Controller(service);
+
+  return {
+    repository,
+    service,
+    controller,
+  };
+}

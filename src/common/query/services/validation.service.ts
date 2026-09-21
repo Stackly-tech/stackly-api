@@ -1,5 +1,5 @@
-import { QueryDtoSchema } from "#common/dtos/query.dto.js";
-import type { QueryMetadata } from "#common/interfaces/IInternal-query.js";
+import { QueryDtoSchema } from "#/common/dtos/query.dto.js";
+import type { QueryMetadata } from "#/common/interfaces/IInternal-query.js";
 export function createQuerySchema(metadata: QueryMetadata) {
   return QueryDtoSchema.superRefine((query, ctx) => {
     const selectable = new Set(metadata.selectableFields);

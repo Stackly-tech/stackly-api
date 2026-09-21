@@ -1,18 +1,19 @@
 import express, { type Express } from "express";
-import { requestLogger, logger } from "#common/config/logger.js";
+import { requestLogger, logger } from "#/common/config/logger.js";
 import helmet from "helmet";
 import cors from "cors";
 import { rateLimit } from "express-rate-limit";
 import compression from "compression";
 import type { Request, Response, NextFunction } from "express";
-import { AppError } from "#exceptions/app.error.js";
+import { AppError } from "#/exceptions/app.error.js";
 import { ZodError } from "zod";
-import { Prisma } from "#generated/prisma/client.js";
+import { Prisma } from "#/generated/prisma/client.js";
 
 export function registerMiddlewares(app: Express) {
   app.use(helmet());
   app.use(
     cors({
+      origin: "http://localhost:3100",
       credentials: true,
       methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
       allowedHeaders: ["Authorization", "Content-Type"],
@@ -33,9 +34,9 @@ export function registerMiddlewares(app: Express) {
 }
 export function errorHandler(
   err: unknown,
-  req: Request,
+  _req: Request,
   res: Response,
-  next: NextFunction,
+  _next: NextFunction,
 ) {
   if (err instanceof AppError) {
     logger.warn(err);
