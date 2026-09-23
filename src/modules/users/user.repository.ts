@@ -33,7 +33,8 @@ export class UserRepository extends IRepository<any> {
   };
 
   update = (data: any): Promise<any> => {
-    return this.db.update(data);
+    console.log("🚀 ~ UserRepository ~ data:", data);
+    return this.db.update({ where: { id: data.id }, data: data.data });
   };
 
   delete = (_id: any): Promise<any> => {

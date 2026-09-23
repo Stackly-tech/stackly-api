@@ -1,7 +1,7 @@
 import { IService } from "#/common/interfaces/IService.js";
 import { type Request, type Response } from "express";
 import { BaseController } from "#/common/controllers/base.controller.js";
-
+import { S3Storage } from "../../common/storage/s3/s3.storage.js";
 export class UserController extends BaseController {
   constructor(private readonly service: IService<any>) {
     super();
@@ -37,7 +37,20 @@ export class UserController extends BaseController {
   };
 
   update = async (req: Request, res: Response) => {
-    const result = await this.service.update(req.body);
+    const { id } = req.params;
+    const file = req.file;
+    const key = `users/${id}/avatar/${crypto.randomUUID()}-${file.originalname}`;
+    const storage = new S3Storage();
+    await storage.upload(key, file?.buffer, file?.mimetype);
+    console.log("🚀 ~ UserController ~ id:", id);
+    console.log("🚀 ~ UserController ~ data:", file);
+    const data = { image: key };
+
+    const result = await this.service.update({
+      id,
+      data,
+    });
+
     return this.ok(res, result);
   };
 

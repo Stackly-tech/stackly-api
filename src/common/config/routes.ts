@@ -13,5 +13,5 @@ export function registerRoute(app: Express) {
   });
   app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(document));
   app.all("/api/auth/*splat", toNodeHandler(auth));
-  app.use("/api", authenticate, router);
+  app.use("/api", router);
 }

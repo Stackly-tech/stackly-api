@@ -1,5 +1,6 @@
 node_modules/
 .env
 /src/generated/prisma
+/src/generated/zod
 app.log
 /dist
