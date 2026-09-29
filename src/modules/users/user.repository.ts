@@ -4,7 +4,7 @@ type PageArgs = { page?: number | null; pageSize?: number | null };
 
 export class UserRepository {
   findAll = async (args: Prisma.UserFindManyArgs = {}) => {
-    return prisma.user.listAll(args);
+    return prisma.user.findMany(args);
   };
   findPage = async (args: Prisma.UserFindManyArgs & PageArgs = {}) => {
     return prisma.user.listPage(args);

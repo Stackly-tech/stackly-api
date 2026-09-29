@@ -25,13 +25,6 @@ export const prisma = basePrisma.$extends({
   },
   model: {
     $allModels: {
-      async listAll<T>(
-        this: T,
-        args: Prisma.Args<T, "findMany">,
-      ): Promise<Prisma.Result<T, typeof args, "findMany">> {
-        const context = Prisma.getExtensionContext(this);
-        return (context as any).findMany(args);
-      },
       async listPage<T>(
         this: T,
         args: Prisma.Args<T, "findMany"> & { page?: number; pageSize?: number },
