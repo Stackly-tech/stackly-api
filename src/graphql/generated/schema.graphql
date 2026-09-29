@@ -1,0 +1,42 @@
+input CreateUserInput {
+  email: String!
+  firstName: String
+  lastName: String
+  name: String
+}
+
+type Mutation {
+  createUser(input: CreateUserInput!): User
+  deleteUser(id: String!): User
+  updateUser(id: String!, input: UpdateUserInput!): User
+}
+
+type Query {
+  user(id: String!): User
+  userPage(page: Int, pageSize: Int): UserPage
+  users(skip: Int, take: Int): [User!]
+}
+
+input UpdateUserInput {
+  firstName: String
+  lastName: String
+  name: String
+}
+
+type User {
+  createdAt: String
+  email: String
+  emailVerified: Boolean
+  firstName: String
+  id: ID
+  lastName: String
+  name: String
+  updatedAt: String
+}
+
+type UserPage {
+  page: Int
+  rows: [User!]
+  totalCount: Int
+  totalPages: Int
+}

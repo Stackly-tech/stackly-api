@@ -1,7 +1,16 @@
-// infrastructure/auth/auth.middleware.ts
-
 import type { Request, Response, NextFunction } from "express";
 import { BetterAuthService } from "./better-auth.service.js";
+
+declare global {
+  namespace Express {
+    interface Request {
+      auth?: {
+        userId: string;
+        sessionId: string;
+      };
+    }
+  }
+}
 
 const authService = new BetterAuthService();
 
@@ -9,15 +18,15 @@ export async function authenticate(
   req: Request,
   res: Response,
   next: NextFunction,
-) {
+): Promise<void> {
   try {
     const session = await authService.getSession(req);
-    console.log("🚀 ~ authenticate ~ session:", session);
 
     if (!session) {
-      return res.status(401).json({
+      res.status(401).json({
         message: "Unauthorized",
       });
+      return;
     }
 
     req.auth = {

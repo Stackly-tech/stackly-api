@@ -1,20 +1,20 @@
 import express, { type Express } from "express";
-import { requestLogger, logger } from "#/common/config/logger.js";
-import helmet from "helmet";
+import { requestLogger, logger } from "#/infrastructure/logging/logger.service.js";
 import cors from "cors";
 import { rateLimit } from "express-rate-limit";
 import compression from "compression";
 import type { Request, Response, NextFunction } from "express";
-import { AppError } from "#/exceptions/app.error.js";
+import { AppError } from "#/common/errors/app.error.js";
 import { ZodError } from "zod";
 import { Prisma } from "#/generated/prisma/client.js";
 import multer from "multer";
 import os from "os";
+
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
+  destination: (_req, _file, cb) => {
     cb(null, os.tmpdir());
   },
-  filename: (req, file, cb) => {
+  filename: (_req, file, cb) => {
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
     cb(null, uniqueSuffix + "-" + file.originalname);
   },
@@ -28,7 +28,6 @@ export const upload = multer({
 });
 
 export function registerMiddlewares(app: Express) {
-  // app.use(helmet());
   app.use(
     cors({
       origin: "http://localhost:3100",
@@ -50,6 +49,7 @@ export function registerMiddlewares(app: Express) {
   app.use(express.json({ limit: "5mb" }));
   app.use(requestLogger);
 }
+
 export function errorHandler(
   err: unknown,
   _req: Request,

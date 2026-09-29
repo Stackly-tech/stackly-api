@@ -4,8 +4,8 @@
   "description": "This repository contains a Node.js Express application following a layered architecture. The structure is intentionally empty; you can add your implementation files later.",
   "main": "app.js",
   "scripts": {
-    "dev": "tsx watch --env-file=.env src/server.ts",
-    "start": "tsx --env-file=.env src/server.ts",
+    "dev": "tsx watch --env-file=.env src/main.ts",
+    "start": "tsx --env-file=.env src/main.ts",
     "build": "tsc",
     "test": "tsx --test --env-file=.env src/tests/search.ts",
     "format": "prettier --write .",
@@ -68,6 +68,7 @@
     "@eslint/js": "^10.0.1",
     "@faker-js/faker": "^10.5.0",
     "@pothos/plugin-prisma": "^4.17.0",
+    "@pothos/plugin-relay": "^4.8.1",
     "@types/compression": "^1.8.1",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
