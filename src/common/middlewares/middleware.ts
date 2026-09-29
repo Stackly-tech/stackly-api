@@ -28,7 +28,7 @@ export const upload = multer({
 });
 
 export function registerMiddlewares(app: Express) {
-  app.use(helmet());
+  // app.use(helmet());
   app.use(
     cors({
       origin: "http://localhost:3100",

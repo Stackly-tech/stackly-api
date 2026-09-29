@@ -10,6 +10,11 @@ generator zod {
   output   = "../src/generated/zod"
 }
 
+generator pothos {
+  provider = "prisma-pothos-types"
+  output   = "../src/generated/pothos"
+}
+
 datasource db {
   provider = "postgresql"
 }
