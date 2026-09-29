@@ -25,7 +25,7 @@ const pageQuery = listQuery.extend({
   pageSize: z.coerce.number().int().min(1).optional(),
 });
 export class UserController {
-  constructor(private service: UserService) {}
+  constructor(private service: UserService) {console.log("🚀 ~ UserController ~ service:", service);}
 
   list = async (req: Request, res: Response) => {
     const { filters, fields } = listQuery.parse(req.query);
