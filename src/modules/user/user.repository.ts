@@ -34,6 +34,8 @@ export class UserRepository {
     if (data.firstName) createData.firstName = data.firstName;
     if (data.lastName) createData.lastName = data.lastName;
 
+    console.log(createData);
+
     return this.db.user.create({
       data: createData,
     });
