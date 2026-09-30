@@ -1,5 +1,5 @@
 import { fromNodeHeaders } from "better-auth/node";
-import { auth } from "./better-auth.config.js";
+import { auth } from "#/config/better-auth.config.js";
 import type { Request } from "express";
 
 export class BetterAuthService {

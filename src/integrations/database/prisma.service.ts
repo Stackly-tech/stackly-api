@@ -3,8 +3,9 @@ import { Pool } from "pg";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { prismaQueryInsights } from "@prisma/sqlcommenter-query-insights";
 import { prismaExtensions } from "./prisma.extensions.js";
+import { databaseConfig } from "#/config/database.config.js";
 
-const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+const pool = new Pool({ connectionString: databaseConfig.url });
 const adapter = new PrismaPg(pool);
 
 export const basePrisma = new PrismaClient({
@@ -14,7 +15,7 @@ export const basePrisma = new PrismaClient({
 });
 
 export const prisma = basePrisma.$extends(prismaExtensions);
-
+export type Db = typeof prisma;
 export class PrismaService {
   readonly client = prisma;
   readonly baseClient = basePrisma;

@@ -4,7 +4,7 @@ import {
   S3Client,
   type S3ClientConfig,
 } from "@aws-sdk/client-s3";
-import { s3Config } from "./s3.config.js";
+import { s3Config } from "#/config/s3.config.js";
 import type { StorageService } from "./storage.interface.js";
 
 const clientConfig: S3ClientConfig = {

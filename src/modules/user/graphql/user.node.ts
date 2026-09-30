@@ -1,4 +1,4 @@
-import { builder } from "../builder.js";
+import { builder } from "../../../graphql/builder.js";
 import type { User } from "#/generated/prisma/client.js";
 
 export const UserRef = builder.prismaObject("User", {

@@ -1,8 +1,6 @@
 import { pino } from "pino";
 import type { Request, Response, NextFunction } from "express";
-import path from "node:path";
-
-const projectDir = process.cwd();
+import { loggerConfig } from "#/config/logger.config.js";
 
 const logger = pino({
   transport: {
@@ -11,7 +9,7 @@ const logger = pino({
         target: "pino/file",
         level: "debug",
         options: {
-          destination: path.join(projectDir, "src", "app.log"),
+          destination: loggerConfig.filePath,
           mkdir: true,
           colorize: true,
           translateTime: "yyyy-mm-dd HH:MM:ss",
@@ -20,7 +18,7 @@ const logger = pino({
       },
       {
         target: "pino-pretty",
-        level: process.env.LOG_LEVEL || "info",
+        level: loggerConfig.level,
         options: {
           colorize: true,
           translateTime: "yyyy-mm-dd HH:MM:ss",

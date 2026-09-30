@@ -1,11 +1,18 @@
 import type { Prisma, User } from "#/generated/prisma/client.js";
-import type { IUserRepository } from "./user.repository.interface.js";
-import type { PageArgs, UserPageResult, CreateUserInput, UpdateUserInput } from "./user.types.js";
-
+// import type { IUserRepository } from "./user.repository.interface.js";
+import type {
+  PageArgs,
+  UserPageResult,
+  CreateUserInput,
+  UpdateUserInput,
+} from "./user.types.js";
+import { UserRepository } from "#/modules/user/user.repository.js";
 export class UserService {
-  constructor(private repo: IUserRepository) {}
+  constructor(private repo: UserRepository) {}
 
-  listPage = async (args: Prisma.UserFindManyArgs & PageArgs = {}): Promise<UserPageResult> => {
+  listPage = async (
+    args: Prisma.UserFindManyArgs & PageArgs = {},
+  ): Promise<UserPageResult> => {
     return this.repo.findPage(args);
   };
 

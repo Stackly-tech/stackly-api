@@ -1,5 +1,5 @@
 import express, { type Express } from "express";
-import { requestLogger, logger } from "#/infrastructure/logging/logger.service.js";
+import { requestLogger, logger } from "#/integrations/logging/logger.service.js";
 import cors from "cors";
 import { rateLimit } from "express-rate-limit";
 import compression from "compression";

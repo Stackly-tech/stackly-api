@@ -1,7 +1,8 @@
 import { createClient, type RedisClientType } from "redis";
+import { redisConfig } from "#/config/redis.config.js";
 
 export const redis: RedisClientType = createClient({
-  url: process.env.REDIS_URL ?? "redis://localhost:6379",
+  url: redisConfig.url,
 });
 
 redis.on("error", (error) => {

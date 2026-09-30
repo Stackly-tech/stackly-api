@@ -1,6 +1,6 @@
-import { PrismaService } from "#/infrastructure/database/prisma.service.js";
-import { RedisCacheService } from "#/infrastructure/cache/redis.service.js";
-import { UserModule } from "#/modules/user/user.module.js";
+import { PrismaService } from "#/integrations/database/prisma.service.js";
+import { RedisCacheService } from "#/integrations/cache/redis.service.js";
+import { UserModule } from "#/graphql/schema.js";
 import type { AppContext } from "./app.context.js";
 
 export class AppContainer {

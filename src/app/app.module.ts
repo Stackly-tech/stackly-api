@@ -2,7 +2,7 @@ import express, { type Express } from "express";
 import cors from "cors";
 import compression from "compression";
 import { rateLimit } from "express-rate-limit";
-import { requestLogger } from "#/infrastructure/logging/logger.service.js";
+import { requestLogger } from "#/integrations/logging/logger.service.js";
 import { graphqlModule } from "#/graphql/graphql.module.js";
 import { handleAuthWebhooks } from "#/http/webhooks/better-auth.webhook.js";
 import { swaggerUi, document } from "#/common/utils/index.js";

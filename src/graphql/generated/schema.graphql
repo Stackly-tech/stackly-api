@@ -6,9 +6,9 @@ input CreateUserInput {
 }
 
 type Mutation {
-  createUser(input: CreateUserInput!): User
   deleteUser(id: String!): User
-  updateUser(id: String!, input: UpdateUserInput!): User
+  userCreate(input: CreateUserInput!): User
+  userUpdate(id: String!, input: UpdateUserInput!): User
 }
 
 type Query {

@@ -1,8 +1,8 @@
 import { randomUUID } from "node:crypto";
-import { logger } from "#/infrastructure/logging/logger.service.js";
-import { redis } from "#/infrastructure/cache/redis.service.js";
-import { prisma } from "#/infrastructure/database/prisma.service.js";
-import { UserModule } from "#/modules/user/user.module.js";
+import { logger } from "#/integrations/logging/logger.service.js";
+import { redis } from "#/integrations/cache/redis.service.js";
+import { prisma } from "#/integrations/database/prisma.service.js";
+import { UserModule } from "#/graphql/schema.js";
 
 export const createContext = ({ request }: { request: Request }) => {
   const requestId = request.headers.get("x-request-id") ?? randomUUID();
