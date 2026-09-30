@@ -1,6 +1,0 @@
-import { Create{{pascalCase name}}Dto } from "./create-{{kebabCase name}}.dto.js";
-import { z } from "zod";
-
-export const Update{{pascalCase name}}Dto = Create{{pascalCase name}}Dto.partial();
-
-export type Update{{pascalCase name}}Dto = z.infer<typeof Update{{pascalCase name}}Dto>;
