@@ -19,8 +19,11 @@ export class UserRepository {
     return this.db.user.listPage(args);
   }
 
-  async findById(id: string): Promise<User | null> {
-    return this.db.user.findUnique({ where: { id } });
+  async findById(
+    id: string,
+    query: Prisma.UserFindFirstArgs,
+  ): Promise<User | null> {
+    return this.db.user.findUnique({ ...query, where: { id } });
   }
 
   async create(data: CreateUserInput): Promise<User> {

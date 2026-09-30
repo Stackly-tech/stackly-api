@@ -20,8 +20,11 @@ export class UserService {
     return this.repo.findAll(args);
   };
 
-  getById = async (id: string): Promise<User | null> => {
-    return this.repo.findById(id);
+  getById = async (
+    id: string,
+    query: Prisma.UserFindFirstArgs,
+  ): Promise<User | null> => {
+    return this.repo.findById(id, query);
   };
 
   createUser = async (data: CreateUserInput): Promise<User> => {
