@@ -20,6 +20,7 @@ export async function authenticate(
   next: NextFunction,
 ): Promise<void> {
   try {
+    console.log("skbskj");
     const session = await authService.getSession(req);
 
     if (!session) {
