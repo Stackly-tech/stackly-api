@@ -18,7 +18,7 @@ export function createUserModule() {
     userUpdate: resolver.userUpdate(t),
     deleteUser: resolver.deleteUser(t),
   }));
-
+console.log("hello");
   return {
     repository,
     service,
