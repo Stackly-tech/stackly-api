@@ -2,6 +2,7 @@ import { builder } from "../../../graphql/builder.js";
 import type { User } from "#/generated/prisma/client.js";
 
 export const UserRef = builder.prismaObject("User", {
+  select: {},
   fields: (t) => ({
     id: t.exposeID("id"),
     email: t.exposeString("email"),

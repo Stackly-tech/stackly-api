@@ -48,7 +48,8 @@ export class UserResolver {
       },
 
       resolve: (_query, _root, args, ctx) => {
-        return ctx.services.user.getById(args.id);
+        console.log("🚀 ~ UserResolver ~ _query:", _query);
+        return ctx.services.user.getById(args.id, _query);
       },
     });
   };
