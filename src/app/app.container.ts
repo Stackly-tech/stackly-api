@@ -23,6 +23,13 @@ export class AppContainer {
       },
     };
   }
+  async start() {
+    await this.prisma.connect();
+    // await this.cache.connect();
+  }
+  async stop() {
+    await this.prisma.disconnect();
+  }
 }
 
 export const container = new AppContainer();
