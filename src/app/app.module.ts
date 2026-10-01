@@ -6,7 +6,7 @@ import { requestLogger } from "#/integrations/logging/logger.service.js";
 import { graphqlModule } from "#/graphql/graphql.module.js";
 import { handleAuthWebhooks } from "#/http/webhooks/better-auth.webhook.js";
 import { swaggerUi, document } from "#/common/utils/index.js";
-import { errorHandler } from "#/common/middlewares/middleware.js";
+import { errorHandler } from "#/common/middlewares/middlewares.js";
 
 export function createApp(): Express {
   const app = express();
