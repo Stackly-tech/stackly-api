@@ -36,3 +36,5 @@ export class UserService {
     return this.repo.delete(id);
   };
 }
+
+console.log("UserService loaded");
