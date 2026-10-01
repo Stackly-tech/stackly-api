@@ -9,3 +9,5 @@ export interface IUserRepository {
   update(id: string, data: UpdateUserInput): Promise<User>;
   delete(id: string): Promise<User>;
 }
+
+console.log("hello")
