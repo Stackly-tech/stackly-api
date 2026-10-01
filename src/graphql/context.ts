@@ -16,4 +16,6 @@ export const createContext = ({ request }: { request: Request }) => {
   };
 };
 
+console.log("hello")
+
 export type Context = ReturnType<typeof createContext>;
