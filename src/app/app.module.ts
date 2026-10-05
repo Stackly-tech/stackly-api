@@ -87,3 +87,5 @@ export function createApp(): Express {
 
   return app;
 }
+export const app = createApp();
+export default app;
