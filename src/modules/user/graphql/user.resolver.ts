@@ -26,13 +26,14 @@ export class UserResolver {
         skip: t.arg.int(),
       },
 
-      resolve: (query, _root, args, ctx) => {
+      resolve: async (query, _root, args, ctx) => {
         const findArgs: Prisma.UserFindManyArgs = {
           ...query,
           ...(args.take != null && { take: args.take }),
           ...(args.skip != null && { skip: args.skip }),
         };
-
+        const session = await ctx.getSession();
+        console.log("🚀 ~ UserResolver ~ session:", session.user);
         return ctx.services.user.listAll(findArgs);
       },
     });

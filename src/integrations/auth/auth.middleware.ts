@@ -1,5 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
 import { BetterAuthService } from "./better-auth.service.js";
+import { fromNodeHeaders } from "better-auth/node";
 
 declare global {
   namespace Express {
@@ -12,7 +13,7 @@ declare global {
   }
 }
 
-const authService = new BetterAuthService();
+export const authService = new BetterAuthService();
 
 export async function authenticate(
   req: Request,
@@ -20,21 +21,13 @@ export async function authenticate(
   next: NextFunction,
 ): Promise<void> {
   try {
-    console.log("skbskj");
-    const session = await authService.getSession(req);
-
-    if (!session) {
-      res.status(401).json({
-        message: "Unauthorized",
-      });
-      return;
-    }
-
+    const session = await authService.getRequiredSession(
+      fromNodeHeaders(req.headers),
+    );
     req.auth = {
       userId: session.user.id,
       sessionId: session.session.id,
     };
-
     next();
   } catch (error) {
     next(error);

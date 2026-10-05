@@ -3,11 +3,6 @@ import { writeFileSync, mkdirSync } from "fs";
 import path from "path";
 import { builder } from "./builder.js";
 import { createUserModule } from "#/modules/user/user.module.js";
-
-// import "./user/user.node.js";
-// // import "./user/user.inputs.js";
-// import "../modules/user/graphql/user.resolver.js";
-// import "../modules/user/graphql/user.mutations.js";
 export const UserModule = createUserModule();
 export const schema = builder.toSchema();
 

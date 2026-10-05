@@ -2,11 +2,11 @@ import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "#/integrations/database/prisma.service.js";
 import { username, admin } from "better-auth/plugins";
-
+import { appConfig, authConfig } from "#/config/index.js";
 export const auth = betterAuth({
-  baseURL: process.env.BETTER_AUTH_URL ?? "",
+  baseURL: appConfig.corsOrigin,
   basePath: "/api/auth",
-  trustedOrigins: [process.env.trustedOrigins ?? ""],
+  trustedOrigins: [appConfig.trustedOrigins ?? ""],
   database: prismaAdapter(prisma, {
     provider: "postgresql",
   }),
@@ -34,12 +34,12 @@ export const auth = betterAuth({
   },
   socialProviders: {
     github: {
-      clientId: process.env.GITHUB_CLIENT_ID ?? "",
-      clientSecret: process.env.GITHUB_CLIENT_SECRET ?? "",
+      clientId: authConfig.github_client_id ?? "",
+      clientSecret: authConfig.github_client_secret ?? "",
     },
     google: {
-      clientId: process.env.GOOGLE_CLIENT_ID ?? "",
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
+      clientId: authConfig.google_client_id ?? "",
+      clientSecret: authConfig.google_client_secret ?? "",
     },
   },
 });

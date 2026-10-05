@@ -1,4 +1,4 @@
 import { toNodeHandler } from "better-auth/node";
-import { auth } from "#/config/better-auth.config.js";
+import { auth } from "#/integrations/auth/better-auth.js";
 
 export const handleAuthWebhooks = toNodeHandler(auth);

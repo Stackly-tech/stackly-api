@@ -1,3 +1,3 @@
-export * from "#/config/better-auth.config.js";
-export * from "./better-auth.service.js";
-export * from "./auth.middleware.js";
+export * from "#/integrations/auth/better-auth.js";
+export * from "../../integrations/auth/better-auth.service.js";
+export * from "../../integrations/auth/auth.middleware.js";
