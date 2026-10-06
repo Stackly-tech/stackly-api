@@ -3,8 +3,13 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "#/integrations/database/prisma.service.js";
 import { username, admin } from "better-auth/plugins";
 import { appConfig, authConfig } from "#/config/index.js";
+console.log(
+  "DEBUG: Raw process.env GOOGLE_CLIENT_ID:",
+  process.env.GOOGLE_CLIENT_ID,
+);
+console.log("DEBUG: Parsed authConfig:", authConfig);
 export const auth = betterAuth({
-  baseURL: appConfig.corsOrigin,
+  baseURL: "http://localhost:3000",
   basePath: "/api/auth",
   trustedOrigins: [appConfig.trustedOrigins ?? ""],
   database: prismaAdapter(prisma, {
