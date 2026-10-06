@@ -12,7 +12,7 @@ generator zod {
 
 generator pothos {
   provider = "prisma-pothos-types"
-  output   = "../src/generated/pothos"
+  output   = "../src/generated/pothos.ts"
 }
 
 datasource db {
